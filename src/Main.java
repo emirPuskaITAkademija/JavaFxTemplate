@@ -1,27 +1,101 @@
-import controller.ShowController;
-import dao.ShowDao;
-import dao.connection.ConnectionPool;
-import dialog.MessageDialog;
-import entity.Show;
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.sql.SQLException;
 
 /**
  * <p>Kreiraje menija</p>
  * File, Edit, View..
  */
-public class Main extends Application{
+public class Main extends  Application{
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("JavFx");
+        Label welcomeLabel = new Label("Welcome");
+        TextField nameTextField = new TextField();
+        Label nameLabel = new Label();
+        nameLabel.setAlignment(Pos.CENTER_LEFT);
+
+
+        VBox root = new VBox(10, welcomeLabel, nameTextField, nameLabel);
+        root.setPadding(new Insets(20, 20, 20, 20));
+        root.setAlignment(Pos.CENTER);
+        nameLabel.textProperty().bind(nameTextField.textProperty());
+        Scene scene = new Scene(root ,300, 250);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
+/*
+public class Main extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("JavaFx");
+        //Kontejner
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        //UI controls
+        Label usernameLabel = new Label("Username");
+        //INLINE style
+        usernameLabel.setStyle("-fx-text-fill:white");
+        GridPane.setConstraints(usernameLabel, 0, 0);
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Enter username...");
+        GridPane.setConstraints(usernameField, 1,0);
+        Label passwordLabel = new Label("Password");
+        passwordLabel.setId("bold-label");
+        GridPane.setConstraints(passwordLabel, 0,1);
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Enter password...");
+        GridPane.setConstraints(passwordField, 1,1);
+
+
+        Button loginButton = new Button("Login");
+        loginButton.setDisable(true);
+        loginButton.setOnAction(event -> {
+            setUserAgentStylesheet(STYLESHEET_CASPIAN);
+        });
+        Button registerButton = new Button("Register");
+        registerButton.getStyleClass().add("button-blue");
+        FlowPane flowPane = new FlowPane();
+        flowPane.setHgap(10);
+        flowPane.setAlignment(Pos.CENTER_RIGHT);
+        flowPane.getChildren().addAll(loginButton, registerButton);
+        GridPane.setConstraints(flowPane, 1,2);
+        //Kontejner <-> UI controls
+        ObservableList<Node> gridPaneChildren = gridPane.getChildren();
+        gridPaneChildren.addAll(usernameLabel, usernameField, passwordLabel, passwordField, flowPane);
+
+        Scene scene = new Scene(gridPane, 500, 180);
+        scene.getStylesheets().add("Dark.css");
+        stage.setScene(scene);
+        stage.show();
+    }
+}
+
+    /*
     public static void main(String[] args) {
         launch(args);
     }
